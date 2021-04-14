@@ -1,4 +1,4 @@
-package Reimbursements;
+package reimbursements;
 
 import java.io.IOException;
 
