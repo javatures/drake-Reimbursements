@@ -14,8 +14,10 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String user = req.getParameter("user");
+        String user = req.getParameter("user").toLowerCase();
         String pass = req.getParameter("pass");
         resp.getWriter().println(user + " " + pass);
     }
+
+    
 }
