@@ -12,5 +12,3 @@ create table employees (
     employeetype int references employeetypes(id)
 );
 
-insert into employeetypes (position) values ('manager');
-insert into employees (firstname, lastname, username, pass, employeetype) values ('Drake', 'Taylor', 'drake.taylor', 'drake', 1);
