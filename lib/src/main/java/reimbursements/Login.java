@@ -22,15 +22,21 @@ public class Login extends HttpServlet {
         String pass = req.getParameter("pass");
         EmployeeDao dao = new EmployeeDao();
         ArrayList<Employee> list = dao.getEmployees();
+        System.out.println(list.size());
 
-        boolean found = false;
         for (Employee e : list) {
-            if (e.getUser().equals(user) && e.getPass().equals(pass))
-                found = true;
-                resp.getWriter().println(e);
+            if (e.getUser().equals(user)) {
+                if (e.getPass().equals(pass)) {
+                    resp.getWriter().println(e);
+                    return;
+                }
+                else {
+                    resp.sendRedirect("?status=pass");
+                    return;
+                }
+            }
         }
-        if (!found)
-        resp.sendRedirect("");
+        resp.sendRedirect("?status=user");
     }
 
 

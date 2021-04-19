@@ -1,0 +1,1 @@
+\copy employeetypes (position) from '/var/lib/postgresql/data/employeetypes.csv' delimiter ',' csv header;

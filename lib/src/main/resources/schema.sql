@@ -11,4 +11,3 @@ create table employees (
     pass text,
     employeetype int references employeetypes(id)
 );
-
