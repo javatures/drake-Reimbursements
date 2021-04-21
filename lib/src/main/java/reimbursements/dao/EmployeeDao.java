@@ -34,4 +34,12 @@ public class EmployeeDao {
     public ArrayList<Employee> getEmployees() {
         return employees;
     }
+
+    public Employee getEmployee(int id) {
+        for (Employee e : employees) {
+            if (e.getId() == id)
+                return e;
+        }
+        return null;
+    }
 }
