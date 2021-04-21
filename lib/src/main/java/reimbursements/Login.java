@@ -20,14 +20,19 @@ public class Login extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String user = req.getParameter("user").toLowerCase();
         String pass = req.getParameter("pass");
-        EmployeeDao dao = new EmployeeDao();
+        if (req.getSession().getAttribute("dao") == null)
+            req.getSession().setAttribute("dao", new EmployeeDao());
+        EmployeeDao dao = (EmployeeDao) req.getSession().getAttribute("dao");
         ArrayList<Employee> list = dao.getEmployees();
-        System.out.println(list.size());
 
         for (Employee e : list) {
             if (e.getUser().equals(user)) {
                 if (e.getPass().equals(pass)) {
-                    resp.getWriter().println(e);
+                    req.getSession().setAttribute("id", e.getId());
+                    if (e.getType().equals("manager"))
+                        resp.sendRedirect("manager.html");
+                    else
+                        resp.sendRedirect("employee.html");
                     return;
                 }
                 else {
