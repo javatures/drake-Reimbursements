@@ -23,15 +23,21 @@ public class RequestServlet extends HttpServlet {
         String description = req.getParameter("description");
         Part image = req.getPart("image");
         
-        File file = new File("resources/images", image.getSubmittedFileName());
+        File file = new File("C:\\Users\\drake\\OneDrive\\Desktop\\Github\\reimbursements\\lib\\src\\main\\resources\\images",
+            image.getSubmittedFileName());
 
         try {
             InputStream stream = image.getInputStream();
             Files.copy(stream, file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
+            e.printStackTrace(resp.getWriter());
         }
 
-        new RequestDao(description, "resources/images/" + image.getSubmittedFileName(), (int) req.getSession().getAttribute("id"));
+        new RequestDao(description, file.getPath(), (int) req.getSession().getAttribute("id"));
+
+        resp.setContentType("text/html");
+        resp.getWriter().println("Your request has been submitted.");
+        resp.getWriter().println("<a href=employee.html>Click here to return to the employee homepage</a>");
     }
 }

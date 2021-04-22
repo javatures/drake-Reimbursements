@@ -17,6 +17,6 @@ create table requests (
     reason text,
     picture text,
     approved boolean,
-    employee int references employees(id)
+    employee int references employees(id),
     manager int references employees(id)
 );
