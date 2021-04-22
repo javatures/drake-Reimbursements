@@ -11,3 +11,12 @@ create table employees (
     pass text,
     employeetype int references employeetypes(id)
 );
+
+create table requests (
+    id serial primary key,
+    reason text,
+    picture text,
+    approved boolean,
+    employee int references employees(id)
+    manager int references employees(id)
+);
