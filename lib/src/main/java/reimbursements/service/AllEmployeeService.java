@@ -21,11 +21,11 @@ public class AllEmployeeService extends HttpServlet {
         resp.setContentType("application/json");
 
         ArrayList<Employee> list = dao.getEmployees();
-        String output = "{\n";
+        String output = "[\n";
         for (int i = 0; i < list.size()-1; i++) {
             output += list.get(i) + ",\n";
         }
-        output += list.get(list.size()-1) + "\n}";
+        output += list.get(list.size()-1) + "\n]";
 
         resp.getWriter().println(output);
     }
