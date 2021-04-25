@@ -23,7 +23,7 @@ public class RequestServlet extends HttpServlet {
         String description = req.getParameter("description");
         Part image = req.getPart("image");
         
-        File file = new File("C:\\Users\\drake\\OneDrive\\Desktop\\Github\\reimbursements\\lib\\src\\main\\resources\\images",
+        File file = new File("C:\\Users\\drake\\OneDrive\\Desktop\\Github\\reimbursements\\lib\\src\\main\\webapp\\images",
             image.getSubmittedFileName());
 
         try {
