@@ -38,6 +38,6 @@ public class RequestServlet extends HttpServlet {
 
         resp.setContentType("text/html");
         resp.getWriter().println("Your request has been submitted.");
-        resp.getWriter().println("<a href=employee.html>Click here to return to the employee homepage</a>");
+        resp.getWriter().println("<a href=\"employee.html\">Click here to return to the employee homepage</a>");
     }
 }

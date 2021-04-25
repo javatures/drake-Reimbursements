@@ -2,6 +2,7 @@ package reimbursements.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,5 +42,29 @@ public class EmployeeDao {
                 return e;
         }
         return null;
+    }
+
+    public void setEmployee(int id, String first, String last, String user, String pass) {
+        Employee employee = getEmployee(id);
+
+        employee.setFirstName(first);
+        employee.setLastName(last);
+        employee.setUser(user);
+        employee.setPass(pass);
+
+        try {
+            Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/reimbursements", "reimbursements", "password");
+            PreparedStatement prep = conn.prepareStatement(
+                "update employees set firstname=?, lastname=?, username=?, pass=? where id=?");
+            prep.setString(1, first);
+            prep.setString(2, last);
+            prep.setString(3, user);
+            prep.setString(4, pass);
+            prep.setInt(5, id);
+            prep.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
