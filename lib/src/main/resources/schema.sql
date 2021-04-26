@@ -20,3 +20,8 @@ create table requests (
     employee int references employees(id),
     manager int references employees(id)
 );
+
+insert into employeetypes (position) values ('manager');
+insert into employeetypes (position) values ('employee');
+insert into employees (firstname, lastname, username, pass, employeetype) values ('Drake', 'Taylor', 'drake.taylor', 'drake', 2);
+insert into employees (firstname, lastname, username, pass, employeetype) values ('Mehrab', 'Rahman', 'mehrab.rahman', 'mehrab', 1);
