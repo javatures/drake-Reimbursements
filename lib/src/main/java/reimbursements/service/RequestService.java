@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import reimbursements.dao.EmployeeDao;
 import reimbursements.dao.RequestDao;
 
 @WebServlet("/api/requests")
@@ -21,6 +22,36 @@ public class RequestService extends HttpServlet {
             int id = Integer.parseInt(employee);
             RequestDao dao = new RequestDao(id);
             resp.getWriter().println(dao.getJson());
+            return;
+        }
+
+        String approved = req.getParameter("approved");
+        int id = (int) req.getSession().getAttribute("id");
+        EmployeeDao edao = (EmployeeDao) req.getSession().getAttribute("dao");
+        boolean manager = edao.getEmployee(id).getType().equals("manager");
+
+        if (approved.equals("false")) {
+            RequestDao dao;
+            if (manager) {
+                dao = new RequestDao(false);
+            }
+            else {
+                dao = new RequestDao(id, false);
+            }
+            resp.getWriter().println(dao.getJson());
+            return;
+        }
+
+        if (approved.equals("true")) {
+            RequestDao dao;
+            if (manager) {
+                dao = new RequestDao(true);
+            }
+            else {
+                dao = new RequestDao(id, true);
+            }
+            resp.getWriter().println(dao.getJson());
+            return;
         }
     }
 }
