@@ -61,10 +61,10 @@ public class RequestDao {
                 "jdbc:postgresql://localhost:5432/reimbursements", "reimbursements", "password");
             String not = approved ? "" : "not ";
             ResultSet result = conn.prepareStatement(
-                "select requests.id, requests.reason, requests.picture, requests.manager, employee.firstname as employeefirst, " +
-                "employee.lastname as employeelast, manager.firstname as managerfirst, manager.lastname as managerlast from " +
-                "requests left join employees employee on requests.employee=employee.id left join employees manager on " +
-                "requests.manager=manager.id where " + not + "requests.approved").executeQuery();
+                "select requests.id, requests.reason, requests.picture, requests.approved, requests.manager," +
+                "employee.firstname as employeefirst, employee.lastname as employeelast, manager.firstname as managerfirst," +
+                "manager.lastname as managerlast from requests left join employees employee on requests.employee=employee.id" +
+                " left join employees manager on requests.manager=manager.id where " + not + "requests.approved").executeQuery();
             
             json = "[\n";
             while (result.next()) {
@@ -114,6 +114,20 @@ public class RequestDao {
             json += "]";
             json = json.replace("},\n]", "}\n]");
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public RequestDao(int id, int managerId) {
+        try {
+            Connection conn = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/reimbursements", "reimbursements", "password");
+            PreparedStatement prep = conn.prepareStatement("update requests set approved=?, manager=? where id=?");
+            prep.setBoolean(1, true);
+            prep.setInt(2, managerId);
+            prep.setInt(3, id);
+            prep.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
